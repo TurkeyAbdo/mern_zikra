@@ -3,6 +3,6 @@ import mongoose from 'mongoose';
 const sessionSchema = new mongoose.Schema({
   _id: { type: String, required: true },
   userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  expiresAt: { type: Date, required: true, expires: 0 }
+  expiresAt: { type: Date, required: true, expires: 0 },
 });
 export default mongoose.model('Session', sessionSchema);
