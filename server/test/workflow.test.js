@@ -147,6 +147,29 @@ test('two accounts share a photo, comment and enforce ownership', async (t) => {
   const detail = await (await request(photoPath)).json();
   assert.equal(detail.comments[0].comment, 'Beautiful light.');
   assert.ok(Date.parse(detail.comments[0].dateTime));
+  const summaryPath = photoPath + '/comments/summary';
+  assert.equal((await request(summaryPath, 'POST')).status, 401);
+  const originalFetch = globalThis.fetch;
+  const originalKey = process.env.OPENAI_API_KEY;
+  process.env.OPENAI_API_KEY = 'workflow-test-only';
+  const upstream = t.mock.method(globalThis, 'fetch', (url, options) => {
+    if (url !== 'https://api.openai.com/v1/responses') return originalFetch(url, options);
+    assert.deepEqual(JSON.parse(JSON.parse(options.body).input), ['Beautiful light.']);
+    return Response.json({
+      status: 'completed',
+      output: [{ type: 'message', content: [{ type: 'output_text', text: 'The viewer likes the lighting.' }] }],
+    });
+  });
+  try {
+    const generated = await request(summaryPath, 'POST', undefined, guest);
+    assert.equal(generated.status, 200);
+    assert.deepEqual(await generated.json(), { summary: 'The viewer likes the lighting.', commentCount: 1 });
+    assert.equal((await request(summaryPath, 'POST', undefined, guest)).status, 429);
+  } finally {
+    upstream.mock.restore();
+    if (originalKey === undefined) delete process.env.OPENAI_API_KEY;
+    else process.env.OPENAI_API_KEY = originalKey;
+  }
   assert.equal(
     (await request(photoPath, 'DELETE', undefined, owner)).status,
     204,

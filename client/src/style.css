@@ -737,6 +737,13 @@ form .primary {
     font-size: 0.8rem;
   }
 }
+.comment-summary {
+  margin: 1rem 0;
+}
+.comment-summary small {
+  display: block;
+  margin-top: 0.5rem;
+}
 @media (prefers-reduced-motion: reduce) {
   * {
     scroll-behavior: auto !important;

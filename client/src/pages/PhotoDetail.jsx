@@ -4,6 +4,7 @@ import { api, author, dateLabel, photoUrl, useResource } from '../api.js';
 import Feedback from '../components/Feedback.jsx';
 import Icon from '../components/Icon.jsx';
 import CommentForm from '../components/CommentForm.jsx';
+import CommentSummary from '../components/CommentSummary.jsx';
 
 export default function PhotoDetail({ user }) {
   const { id } = useParams();
@@ -92,6 +93,9 @@ export default function PhotoDetail({ user }) {
               <h2>
                 Comments <span>({photo.comments.length})</span>
               </h2>
+              {user && photo.comments.length > 0 && (
+                <CommentSummary key={photo._id + ':' + photo.comments.length} photoId={photo._id} />
+              )}
               <div aria-live="polite">
                 {photo.comments.length ? (
                   photo.comments.map((c) => (

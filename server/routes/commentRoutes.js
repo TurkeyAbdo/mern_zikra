@@ -1,9 +1,11 @@
 import { Router } from 'express';
 import { create } from '../controllers/commentController.js';
+import { summarize } from '../controllers/commentSummary.js';
 import { validate, validId, commentFields } from '../middleware/validation.js';
 import { requireUser } from '../middleware/session.js';
 
 const router = Router();
 router.param('id', validId);
 router.post('/:id/comments', requireUser, validate(commentFields), create);
+router.post('/:id/comments/summary', requireUser, summarize);
 export default router;

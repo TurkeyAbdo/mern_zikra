@@ -2,6 +2,14 @@
 
 Alzikrayat is a shared photo journal. Visitors can browse a gallery in grid or list view and read the story and comments behind each photograph. Registered users can upload images, comment on any photo, and delete their own uploads.
 
+## Project 4 · Track F (AI integration)
+
+Photo discussions can grow long and include comments in Arabic or English. Signed-in readers can select **Summarize comments** on a photo to get a short overview in the discussion’s predominant language. Express reads the latest 20 comments from MongoDB and sends their text to the OpenAI Responses API. The React client receives the summary and the number of comments included.
+
+Follow the local setup below, set `OPENAI_API_KEY` in `server/.env` to a server-side OpenAI API key with model access, then start or restart the server. `OPENAI_MODEL` defaults to `gpt-4.1-mini`. Keep the key out of Git and client environment variables.
+
+For the demo, sign in, open a photo, add several comments about different details, then select **Summarize comments**. Compare the generated summary with the originals. Each account can request one summary every 30 seconds per server process. If configuration is missing or OpenAI is unavailable, the photo and comments remain usable.
+
 ## Run locally
 
 Install **Node.js 22.12 or later** with npm. Start a local MongoDB service, or obtain a MongoDB Atlas connection string for a database you control. Run the commands below from the project folder containing this README.
