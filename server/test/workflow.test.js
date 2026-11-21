@@ -10,6 +10,7 @@ import bcrypt from 'bcryptjs';
 test('two accounts share a photo, comment and enforce ownership', async (t) => {
   const uploads = await mkdtemp(path.join(tmpdir(), 'alzikrayat-test-'));
   process.env.UPLOAD_DIR = uploads;
+  process.env.SUMMARY_PROVIDER = 'openai';
   const { app } = await import('../app.js');
   const { default: User } = await import('../models/User.js');
   const { default: Comment } = await import('../models/Comment.js');

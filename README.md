@@ -10,6 +10,8 @@ Follow the local setup below, set `OPENAI_API_KEY` in `server/.env` to a server-
 
 For the demo, sign in, open a photo, add several comments about different details, then select **Summarize comments**. Compare the generated summary with the originals. Each account can request one summary every 30 seconds per server process. If configuration is missing or OpenAI is unavailable, the photo and comments remain usable.
 
+For a local demo using Ollama, set `SUMMARY_PROVIDER=ollama` and `OLLAMA_MODEL=qwen3:8b` in `server/.env`. Start Ollama with that model installed and restart Express. In this mode comment text goes only to Ollama on `127.0.0.1:11434`. An OpenAI key is unnecessary. To demonstrate the assignment's OpenAI integration, select `SUMMARY_PROVIDER=openai` and restart Express with your key configured.
+
 ## Run locally
 
 Install **Node.js 22.12 or later** with npm. Start a local MongoDB service, or obtain a MongoDB Atlas connection string for a database you control. Run the commands below from the project folder containing this README.

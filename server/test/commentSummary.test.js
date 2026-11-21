@@ -2,7 +2,8 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import Comment from '../models/Comment.js';
 import Photo from '../models/Photo.js';
-import { summarize } from '../controllers/commentSummary.js';
+process.env.SUMMARY_PROVIDER = 'openai';
+const { summarize } = await import('../controllers/commentSummary.js');
 
 test('photo summaries use stored comments, bound requests, and handle provider errors', async (t) => {
   const originalKey = process.env.OPENAI_API_KEY;

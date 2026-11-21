@@ -4,7 +4,7 @@ import path from 'node:path';
 import sharp from 'sharp';
 import Photo from '../models/Photo.js';
 import Comment from '../models/Comment.js';
-import { uploadDir } from '../config.js';
+import { uploadDir, summaryProvider } from '../config.js';
 import { httpError } from '../middleware/errorHandler.js';
 
 export const active = { deleting: { $ne: true } };
@@ -26,7 +26,7 @@ export async function getOne(req, res) {
   const comments = await Comment.find({ photoId: photo._id })
     .sort({ dateTime: 1, _id: 1 })
     .populate('userId', authorFields);
-  res.json({ ...photo.toObject(), comments });
+  res.json({ ...photo.toObject(), comments, summaryProvider });
 }
 export async function create(req, res) {
   if (!req.file) throw httpError(400, 'Choose an image to upload.');

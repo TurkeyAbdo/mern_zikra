@@ -94,7 +94,7 @@ export default function PhotoDetail({ user }) {
                 Comments <span>({photo.comments.length})</span>
               </h2>
               {user && photo.comments.length > 0 && (
-                <CommentSummary key={photo._id + ':' + photo.comments.length} photoId={photo._id} />
+                <CommentSummary key={photo._id + ':' + photo.comments.length} photoId={photo._id} provider={photo.summaryProvider} />
               )}
               <div aria-live="polite">
                 {photo.comments.length ? (

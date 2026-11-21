@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { api } from '../api.js';
 
-export default function CommentSummary({ photoId }) {
+export default function CommentSummary({ photoId, provider }) {
   const [busy, setBusy] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState('');
@@ -31,7 +31,7 @@ export default function CommentSummary({ photoId }) {
           <button className="outline" type="button" disabled={busy} onClick={summarize}>
             {busy ? 'Summarizing…' : 'Summarize comments'}
           </button>
-          <small>Sends up to 20 recent comments to OpenAI.</small>
+          <small>{provider === 'ollama' ? 'Summarizes up to 20 recent comments locally with Ollama.' : 'Sends up to 20 recent comments to OpenAI.'}</small>
         </>
       )}
       {error && <p className="error" role="alert">{error}</p>}

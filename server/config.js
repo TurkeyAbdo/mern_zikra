@@ -9,3 +9,4 @@ export const uploadDir =
 export const mongoUri =
   process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/alzikrayat';
 export const production = process.env.NODE_ENV === 'production';
+export const summaryProvider = process.env.SUMMARY_PROVIDER || 'openai';
